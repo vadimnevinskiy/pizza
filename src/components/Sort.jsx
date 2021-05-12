@@ -1,11 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 
 
-const Sort = ({items}) => {
+const Sort = React.memo(({items}) => {
+    console.log('RENDER SORT')
+
     const [showSort, setShowSort] = useState(false);
     const [activeItem, setActiveItem] = useState(0);
     const sortRef = useRef(null);
-    const activeLabel = items[activeItem];
+    const activeLabel = items[activeItem].name;
 
     useEffect(() => {
         document.body.addEventListener('click', handleOutsideClick)
@@ -43,7 +45,7 @@ const Sort = ({items}) => {
                         fill="#2C2C2C"
                     />
                 </svg>
-                <b>Сортировка по:</b>
+                <b>по:</b>
                 <span onClick={toggleSortPopup}>{activeLabel}</span>
             </div>
             {
@@ -53,9 +55,9 @@ const Sort = ({items}) => {
                         {items.map((item, index) => {
                             return <li
                                 className={activeItem === index ? 'active' : ''}
-                                key={`${item}_${index}`}
+                                key={`${item.type}_${index}`}
                                 onClick={() => {onSelectItem(index)}}
-                            >{item}</li>
+                            >{item.name}</li>
                         })}
                     </ul>
                 </div>
@@ -63,6 +65,6 @@ const Sort = ({items}) => {
 
         </div>
     )
-}
+})
 
 export default Sort;
